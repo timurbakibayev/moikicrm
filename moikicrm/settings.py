@@ -25,7 +25,7 @@ SECRET_KEY = '&*x*!4_l+4mk$r+b(16ukl$m((*oaj9)$mv=p!tewg=1u&#5$v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','sto.papers.kz']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'main',
 ]
 
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -145,3 +147,4 @@ EMAIL_HOST_USER = 'sagrad2daytelecom@gmail.com'
 EMAIL_HOST_PASSWORD = 'skoda5918'
 EMAIL_PORT = 587
 GLOBAL_URL = "http://localhost:8000/"
+CORS_ORIGIN_ALLOW_ALL = True
