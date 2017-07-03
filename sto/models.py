@@ -38,7 +38,7 @@ class Message(models.Model):
     url = models.TextField(max_length=1000, blank=True, null=True)
 
     def __str__(self):
-        return self.user.username+": "+self.text+" "+self.url
+        return self.user.username+": "+self.text
 
 
 class Subscription(models.Model):
