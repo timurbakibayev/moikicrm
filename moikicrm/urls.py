@@ -15,18 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from main import views_jwt
-from main import views_users
-from main import views
+from sto import views_jwt
+from sto import views_users
+from sto import views
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^auth/$', views_jwt.auth_api),
-    # url(r'^dialogs/$', views.dialog_list),
-    # url(r'^dialogs/(?P<pk>[0-9]+)/$', views.dialog_detail),
-    # url(r'^dialogs/(?P<pk>[0-9]+)/messages/$', views.messages_list),
-    # url(r'^dialogs/(?P<pk>[0-9]+)/messages/(?P<msg>[0-9]+)/$', views.messages_detail),
+    url(r'^dialogs/$', views.dialogs_list),
+    url(r'^dialogs/(?P<pk>[0-9]+)/$', views.dialog_detail),
+    url(r'^dialogs/(?P<pk>[0-9]+)/messages/$', views.messages_list),
+    url(r'^dialogs/(?P<pk>[0-9]+)/messages/(?P<msg>[0-9]+)/$', views.message_detail),
     # url(r'^masters/$', views.master_list),
     # url(r'^masters/(?P<pk>[0-9]+)/$', views.master_detail),
     # url(r'^events/$', views.event_list),

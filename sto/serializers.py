@@ -1,11 +1,11 @@
 from rest_framework import serializers
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import User
-from main.models import Dialog
-from main.models import Message
-from main.models import Event
-from main.models import Master
-from main.models import Subscription
+from sto.models import Dialog
+from sto.models import Message
+from sto.models import Event
+from sto.models import Master
+from sto.models import Subscription
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -24,27 +24,32 @@ class DialogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dialog
         fields = ('id', 'user', 'date_time', 'text', 'city', 'brand', 'model', 'year')
+        read_only_fields = ("id", "user")
 
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ('id', 'user', 'date_time', 'text', 'url')
+        fields = ('id', 'user', 'dialog_id', 'date_time', 'text', 'url')
+        read_only_fields = ("id", "user", "dialog_id")
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = ('id', 'user', 'text')
+        read_only_fields = ("id", "user")
 
 
 class MasterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = ('id', 'user', 'name')
+        read_only_fields = ("id", "user")
 
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ('id', 'user', 'date_time_from', 'date_time_to', 'text', 'price', 'dialog_id')
+        read_only_fields = ("id", "user")

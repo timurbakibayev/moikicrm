@@ -32,9 +32,10 @@ class Dialog(models.Model):
 
 class Message(models.Model):
     user = models.ForeignKey(User)
+    dialog = models.ForeignKey(Dialog)
     date_time = models.DateTimeField(auto_now=True)
     text = models.TextField(max_length=10000)
-    url = models.TextField(max_length=1000)
+    url = models.TextField(max_length=1000, blank=True, null=True)
 
     def __str__(self):
         return self.user.username+": "+self.text+" "+self.url
