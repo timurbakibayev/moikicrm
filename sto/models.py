@@ -24,7 +24,7 @@ class Dialog(models.Model):
     text = models.TextField(max_length=1000)
 
     def __str__(self):
-        return self.brand+" "+self.model+": "+self.text
+        return str(self.date_time)+": "+self.text
 
     class Meta:
         ordering = ["date_time"]
