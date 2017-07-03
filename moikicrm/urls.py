@@ -17,20 +17,22 @@ from django.conf.urls import url
 from django.contrib import admin
 from sto import views_jwt
 from sto import views_users
+from sto import views_crm
 from sto import views
 
 
 urlpatterns = [
+    url(r'^$', views.index),
     url(r'^admin/', admin.site.urls),
     url(r'^auth/$', views_jwt.auth_api),
     url(r'^dialogs/$', views.dialogs_list),
     url(r'^dialogs/(?P<pk>[0-9]+)/$', views.dialog_detail),
     url(r'^dialogs/(?P<pk>[0-9]+)/messages/$', views.messages_list),
     url(r'^dialogs/(?P<pk>[0-9]+)/messages/(?P<msg>[0-9]+)/$', views.message_detail),
-    # url(r'^masters/$', views.master_list),
-    # url(r'^masters/(?P<pk>[0-9]+)/$', views.master_detail),
-    # url(r'^events/$', views.event_list),
-    # url(r'^events/(?P<pk>[0-9]+)/$', views.events_detail),
+    url(r'^masters/$', views_crm.masters_list),
+    url(r'^masters/(?P<pk>[0-9]+)/$', views_crm.master_detail),
+    url(r'^events/$', views_crm.events_list),
+    url(r'^events/(?P<pk>[0-9]+)/$', views_crm.event_detail),
     url(r'^users/$', views_users.user_list),
     url(r'^users/(?P<pk>[0-9]+)/$', views_users.user_detail),
 ]

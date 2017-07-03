@@ -15,7 +15,7 @@ class Profile(models.Model):
 
 
 class Dialog(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_time = models.DateTimeField(auto_now=True)
     city = models.TextField(max_length=100)
     brand = models.TextField(max_length=100, null=True, blank=True)
@@ -31,8 +31,8 @@ class Dialog(models.Model):
 
 
 class Message(models.Model):
-    user = models.ForeignKey(User)
-    dialog = models.ForeignKey(Dialog)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    dialog = models.ForeignKey(Dialog, on_delete=models.CASCADE)
     date_time = models.DateTimeField(auto_now=True)
     text = models.TextField(max_length=10000)
     url = models.TextField(max_length=1000, blank=True, null=True)
@@ -42,17 +42,18 @@ class Message(models.Model):
 
 
 class Subscription(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField(max_length=100)
 
 
 class Master(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.TextField(max_length=100)
 
 
 class Event(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    master = models.ForeignKey(Master, on_delete=models.CASCADE)
     date_time_from = models.DateTimeField()
     date_time_to = models.DateTimeField()
     text = models.TextField(max_length=1000)

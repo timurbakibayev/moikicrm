@@ -43,7 +43,7 @@ class SubscriptionSerializer(serializers.ModelSerializer):
 
 class MasterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Subscription
+        model = Master
         fields = ('id', 'user', 'name')
         read_only_fields = ("id", "user")
 
@@ -51,5 +51,5 @@ class MasterSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ('id', 'user', 'date_time_from', 'date_time_to', 'text', 'price', 'dialog_id')
+        fields = ('id', 'user', 'master_id', 'date_time_from', 'date_time_to', 'text', 'price', 'dialog_id')
         read_only_fields = ("id", "user")
