@@ -1,7 +1,7 @@
 function getUsers() {
     var token = localStorage.getItem('token');
     var user = localStorage.getItem('username');
-    var url = "http://localhost:8000/users/";
+    var url = "/users/";
 
     var xhr = new XMLHttpRequest();
     //var resultElement = document.getElementById('users_div');
@@ -96,61 +96,14 @@ function getUsers() {
             window.times -= 1;
         }
     });
-    xhr.send(null);
+    //xhr.send(null);
 }
 
-function grantManager(id, un) {
-    var token = localStorage.getItem('token');
-    var url = "http://localhost:8000/users/" + id.toString() + "/";
-    var xhr = new XMLHttpRequest();
-    xhr.open('PUT', url, true);
-    xhr.setRequestHeader("Authorization", "JWT " + token);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    xhr.addEventListener('load', function () {
-        var responseObject = JSON.parse(this.response);
-        if (this.status == 200) {
-            getUsers();
-        } else {
-            if (responseObject.detail)
-                alert(responseObject.detail);
-            else
-                alert(responseObject);
-            console.log(responseObject);
-        }
-    });
-    var sendObject = JSON.stringify({manager: un=="un"?false:true});
-    console.log("sending " + sendObject);
-    xhr.send(sendObject);
-}
-
-function blockUser(id, block) {
-    var token = localStorage.getItem('token');
-    var url = "http://localhost:8000/users/" + id.toString() + "/";
-    var xhr = new XMLHttpRequest();
-    xhr.open('PUT', url, true);
-    xhr.setRequestHeader("Authorization", "JWT " + token);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    xhr.addEventListener('load', function () {
-        var responseObject = JSON.parse(this.response);
-        if (this.status == 200) {
-            getUsers();
-        } else {
-            if (responseObject.detail)
-                alert(responseObject.detail);
-            else
-                alert(responseObject);
-            console.log(responseObject);
-        }
-    });
-    var sendObject = JSON.stringify({blocked: block});
-    console.log("sending " + sendObject);
-    xhr.send(sendObject);
-}
 
 function deleteUser(id, name) {
     if (confirm("Delete " + name + "?")) {
         var token = localStorage.getItem('token');
-        var url = "http://localhost:8000/users/" + id.toString() + "/";
+        var url = "/users/" + id.toString() + "/";
         var xhr = new XMLHttpRequest();
         xhr.open('DELETE', url, true);
         xhr.setRequestHeader("Authorization", "JWT " + token);
@@ -180,7 +133,7 @@ function deleteUser(id, name) {
 function setPassword(id) {
     $('#editModalForm').modal('hide');
     var token = localStorage.getItem('token');
-    var url = "http://localhost:8000/users/" + id + "/";
+    var url = "/users/" + id + "/";
     var xhr = new XMLHttpRequest();
     xhr.open('PUT', url, true);
     xhr.setRequestHeader("Authorization", "JWT " + token);

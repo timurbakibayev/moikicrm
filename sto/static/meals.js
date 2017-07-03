@@ -1,6 +1,6 @@
 function newMeal() {
     var token = localStorage.getItem('token');
-    var url = "http://localhost:8000/meals/";
+    var url = "/meals/";
     var xhr = new XMLHttpRequest();
     var textElement = document.getElementById('new_text');
     var dateElement = document.getElementById('new_date');
@@ -67,7 +67,7 @@ function deleteMeal(id, name) {
 
 function editMeal(id) {
     var token = localStorage.getItem('token');
-    var url = "http://localhost:8000/meals/" + id.toString() + "/";
+    var url = "/meals/" + id.toString() + "/";
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.setRequestHeader("Authorization", "JWT " + token);
@@ -82,7 +82,7 @@ function editMeal(id) {
 
 function openEditForm(data) {
     var token = localStorage.getItem('token');
-    var url = "http://localhost:8000/meals/"
+    var url = "/meals/"
     var xhr = new XMLHttpRequest();
     var modalHeader = document.getElementById('edit_modal_header');
     modalHeader.innerHTML = "Edit '" + data["text"] + "'";
@@ -103,7 +103,7 @@ function saveChanges() {
     var editCalories = $('#edit_calories').val();
 
     var token = localStorage.getItem('token');
-    var url = "http://localhost:8000/meals/" + mealId + "/";
+    var url = "/meals/" + mealId + "/";
     var xhr = new XMLHttpRequest();
     xhr.open('PUT', url, true);
     xhr.setRequestHeader("Authorization", "JWT " + token);
@@ -146,7 +146,7 @@ function saveUserSettings() {
     var settingsPassword = $('#settings_password').val();
 
     var token = localStorage.getItem('token');
-    var url = "http://localhost:8000/users/" + localStorage.getItem("user_id") + "/";
+    var url = "/users/" + localStorage.getItem("user_id") + "/";
     var xhr = new XMLHttpRequest();
     xhr.open('PUT', url, true);
     xhr.setRequestHeader("Authorization", "JWT " + token);
@@ -191,7 +191,7 @@ function saveUserSettings() {
 function getMeals() {
     var token = localStorage.getItem('token');
     var user = localStorage.getItem('username');
-    var url = "http://localhost:8000/masters/";
+    var url = "/masters/";
 
     //url += filter;
     console.log("Querying " + url);
