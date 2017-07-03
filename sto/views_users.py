@@ -29,7 +29,7 @@ def request_post_errors(request):
 
 
 # @authentication_classes([])
-# @csrf_exempt
+@csrf_exempt
 @api_view(['GET', 'POST'])
 @permission_classes([])
 @method_decorator(csrf_exempt, name='dispatch')
