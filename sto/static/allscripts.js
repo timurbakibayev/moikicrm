@@ -2,7 +2,7 @@ var editMealId;
 var times = 0;
 
 function getToken() {
-    var loginUrl = "http://localhost:8000/auth/"
+    var loginUrl = "/auth/"
     var xhr = new XMLHttpRequest();
     var userElement = document.getElementById('username');
     var passwordElement = document.getElementById('password');
