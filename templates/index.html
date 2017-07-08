@@ -101,22 +101,17 @@
 <body onload="onLoad()">
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Меню <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand page-scroll" style="color: #2b542c;" href="#">Город мастеров uFix</a>
+            <div class="navbar-brand page-scroll" id="global_status">
+            </div>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a id="invite_button" class="page-scroll" style="color: black;" href="#"></a>
-                </li>
-                <li>
-                    <a id="daily_button" class="page-scroll" style="color: red;" href="#">...</a>
-                </li>
                 <li>
                     <a id="login_button" class="page-scroll" data-toggle="modal" data-target="#myModal"
                        style="color: #2b542c; visibility: hidden" href="#">Войти</a>
@@ -130,28 +125,34 @@
     </div>
 </nav>
 
-<ul class="nav nav-tabs" role="tablist" style="margin-top: 80px; margin-left: 5%; margin-right: 5%; zoom: 0.7">
-    <li role="presentation" class="active"><a href="#profiles" aria-controls="profiles" role="tab" data-toggle="tab">Работа</a></li>
+<ul class="nav nav-tabs" role="tablist" style="margin-top: 80px; margin-left: 2%; margin-right: 2%; zoom: 0.7">
+    <li role="presentation" class="active"><a href="#profiles" aria-controls="profiles" role="tab" data-toggle="tab">Работа</a>
     </li>
-    <li role="presentation" ><a href="#meals" aria-controls="meals" role="tab"
-                                              data-toggle="tab">Мастера</a>
+    </li>
+    <li role="presentation"><a href="#meals" aria-controls="meals" role="tab"
+                               data-toggle="tab">Мастера</a>
     </li>
 </ul>
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane" id="meals">
-        <div style="margin-left: 5%; margin-right: 5%; margin-top: 10px">
+        <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
             <div id="result"></div>
             <div class="main-content" style="margin-left: 0%">
-            <button type="button" class="btn btn-primary btn-primary" style="zoom: 0.8" id="new_master">Новый мастер  <span class="glyphicon glyphicon-pencil"></span></button>
-        </div>
+                <form>
+                    <div class="form-inline">
+                        Новый мастер: <input type="text" class="form-control" id="new_master_name">
+                        <button type="submit" class="btn btn-primary btn-primary" style="margin-left: 5px; zoom: 0.8"
+                                id="new_master">Добавить <span class="glyphicon glyphicon-pencil"></span></button>
+                    </div>
+                </form>
+            </div>
         </div>
 
     </div>
     <div role="tabpanel" class="tab-pane active" id="profiles">
         <div id="users_div"></div>
-        <div id="daypilot_div" style="margin-left: 5%; margin-right: 5%; overflow-y: scroll;">
-            <div id="dp-holder" class="header-content"
-                 style="position: relative; top: 10%; left: 1%; right: 1%; height: 80%">
+        <div id="daypilot_div" style="margin-left: 2%; margin-right: 2%; overflow-y: scroll;">
+            <div id="dp-holder" class="header-content">
                 <div id="dp" style=""></div>
             </div>
             <div id="navigator" style="vertical-align: top;position: relative; top: 10%; left: 10%;"></div>
@@ -186,8 +187,6 @@
                                         <input type="password" name="password" id="password" class="form-control"
                                                placeholder="Пароль">
                                     </div>
-                                    <div style="align-content: center" class="g-recaptcha"
-                                         data-sitekey="6LfF5SQUAAAAALyOaSJNivE1rbCOti7lMwmF85v-"></div>
                                     <div id="login-error-div"
                                          style="margin-bottom: 10px; text-align: center; color: red"></div>
                                     <div class="form-group">

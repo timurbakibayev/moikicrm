@@ -8,9 +8,11 @@ function getToken() {
     var passwordElement = document.getElementById('password');
     var resultElement = document.getElementById('result');
     var errorElement = document.getElementById('login-error-div');
+    var statusElement = document.getElementById('global_status');
     var user = userElement.value;
     var password = passwordElement.value;
     errorElement.innerHTML = "";
+    statusElement.innerHTML = "Загрузка...";
     xhr.open('POST', loginUrl, true);
     xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     xhr.addEventListener('load', function () {
@@ -19,6 +21,7 @@ function getToken() {
         if (responseObject.token) {
             localStorage.setItem('token', responseObject.token);
             localStorage.setItem('username', user);
+            statusElement.innerHTML = "";
             load_all();
             $('#myModal').modal('hide');
             return (true);
@@ -28,7 +31,7 @@ function getToken() {
                 if (responseObject.non_field_errors.toString().indexOf("not verified") > 0)
                     errorElement.innerHTML = responseObject.non_field_errors + "<br><a href='#' onclick='send_verification_code(" + '"' + user + '"' + ")'>Send verification code</a>";
             }
-
+            statusElement.innerHTML = "Вход не выполнен";
             return (false);
         }
     });
@@ -58,37 +61,43 @@ function send_verification_code(username) {
 
 function logout() {
     localStorage.setItem('token', "");
+    dp.init();
+    dp.resources = [];
+    dp.update();
     load_all();
 }
 
 function load_all() {
     getMeals();
-    getUsers();
+    //getUsers();
     loadResources();
     loadEvents();
 }
 function onLoad() {
     $('#new_master').click(function (e) {
-        var name = prompt("Введите имя мастера", "Айдос");
-        console.log("adding an master");
-        var token = localStorage.getItem('token');
-        var user = localStorage.getItem('username');
-        var url = "/masters/";
-        var xhr = new XMLHttpRequest();
-        //var resultElement = document.getElementById('users_div');
-        xhr.open('POST', url, true);
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        xhr.setRequestHeader("Authorization", "JWT " + token);
-        xhr.addEventListener('load', function () {
-            var data = JSON.parse(this.response);
-            console.log(data);
-            load_all();
-        });
-        var sendObject = JSON.stringify({
-            name: name
-        });
-        console.log("Sending", sendObject);
-        xhr.send(sendObject);
+        var name = $("#new_master_name").val();
+        if (name!="") {
+            console.log("adding an master");
+            var token = localStorage.getItem('token');
+            var user = localStorage.getItem('username');
+            var url = "/masters/";
+            var xhr = new XMLHttpRequest();
+            //var resultElement = document.getElementById('users_div');
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            xhr.setRequestHeader("Authorization", "JWT " + token);
+            xhr.addEventListener('load', function () {
+                var data = JSON.parse(this.response);
+                console.log(data);
+                $("#new_master_name").val("")
+                load_all();
+            });
+            var sendObject = JSON.stringify({
+                name: name
+            });
+            console.log("Sending", sendObject);
+            xhr.send(sendObject);
+        }
     });
     $('#login-form-link').click(function (e) {
         $("#login-form").delay(100).fadeIn(100);

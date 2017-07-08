@@ -196,6 +196,7 @@ function getMeals() {
     //url += filter;
     console.log("Querying " + url);
     var xhr = new XMLHttpRequest();
+    var statusElement = document.getElementById('global_status');
     var resultElement = document.getElementById('result');
     xhr.open('GET', url, true);
     xhr.setRequestHeader("Authorization", "JWT " + token);
@@ -205,7 +206,8 @@ function getMeals() {
         if (this.status == 401) {
             document.getElementById("login_button").style.visibility = "visible";
             document.getElementById("logout_button").style.visibility = "hidden";
-            resultElement.innerHTML = "No credentials provided";
+            resultElement.innerHTML = "";
+            statusElement.innerHTML = "Вход не выполнен";
         } else {
             document.getElementById("login_button").style.visibility = "hidden";
             document.getElementById("logout_button").style.visibility = "visible";

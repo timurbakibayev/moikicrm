@@ -188,7 +188,7 @@ dp.onEventMoved = function (args) {
 };
 
 
-dp.eventHeight = 50;
+dp.eventHeight = 40;
 
 dp.onBeforeEventRender = function (args) {
     var start = new DayPilot.Date(args.e.start);
@@ -202,10 +202,10 @@ dp.onBeforeEventRender = function (args) {
     args.e.html = args.e.text;
     //if (approved) {
     args.e.barColor = 'green';
-    args.e.html = args.e.html + "<br /><span style='color:gray' >" + start.toString("hh:mm") + "<br>" + end.toString("hh:mm") + "</span>";
+    args.e.html = args.e.html + "<br /><span style='color:gray' >" + start.toString("hh:mm") + "-" + end.toString("hh:mm") + "</span>";
 
     args.e.toolTip = args.e.bubbleHtml;
-    args.e.html = args.e.html + "<br /><span style='color:gray' >" + start.toString("hh:mm") + "<br>" + end.toString("hh:mm") + "</span>";
+    //args.e.html = args.e.html + "<br /><span style='color:gray' >" + start.toString("hh:mm") + "<br>" + end.toString("hh:mm") + "</span>";
 
     args.e.areas = [
         {

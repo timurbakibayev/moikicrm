@@ -6,8 +6,7 @@ function getUsers() {
     var xhr = new XMLHttpRequest();
     //var resultElement = document.getElementById('users_div');
     var dailyElement = document.getElementById('daily_button');
-    var inviteElement = document.getElementById('invite_button');
-    dailyElement.innerHTML = "...";
+    //dailyElement.innerHTML = "";
     dailyElement.style.color = "black";
     xhr.open('GET', url, true);
     xhr.setRequestHeader("Authorization", "JWT " + token);
@@ -15,6 +14,7 @@ function getUsers() {
         var data = JSON.parse(this.response);
         console.log(data);
         if (this.status == 401) {
+            dailyElement.innerHTML = "Вход не выполнен";
             //resultElement.innerHTML = "Вход не выполнен";
         } else {
             var isAdmin = false;
@@ -43,10 +43,6 @@ function getUsers() {
                     r[++j] = '<tr style="background: #ccddff">';
                     dailyElement.innerHTML = "Today consumed: " + data[key]["consumed"] + "/" + data[key]["calories"];
                     dailyElement.style.color = data[key]["consumed"]>=data[key]["calories"]?"red":"green";
-                    if (data[key]["admin"])
-                        inviteElement.innerHTML = 'Invite (you are an admin)';
-                    else
-                        inviteElement.innerHTML = "";
                 } else
                     r[++j] = '<tr>';
                 if (data[key]["username"] == user)
