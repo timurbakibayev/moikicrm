@@ -67,6 +67,12 @@ def events_list(request):
     events = Event.objects.filter(user=user)
 
     if request.method == "GET":
+        if request.GET.get("start"):
+            date_from = request.GET.get("start").strip()
+            events = events.filter(date_time_to__gte=date_from)
+        if request.GET.get("end"):
+            date_till = request.GET.get("end").strip()
+            events = events.filter(date_time_from__lte=date_till)
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
     if request.method == "POST":

@@ -290,7 +290,7 @@ function loadEvents() {
     console.log("loading events")
     var token = localStorage.getItem('token');
     var user = localStorage.getItem('username');
-    var url = "/events/";
+    var url = "/events/?start="+start.toString()+"&end="+end.toString();
     var xhr = new XMLHttpRequest();
     //var resultElement = document.getElementById('users_div');
     xhr.open('GET', url, true);
@@ -326,19 +326,6 @@ function loadEvents() {
         }
     });
     xhr.send(null);
-
-    $.get("/events/",
-        {
-            start: start.toString(),
-            end: end.toString()
-        },
-        function (data) {
-            //alert(data);
-            //dp.events.list = data;
-            //dp.update({events: $.parseJSON(data)});
-        }
-    )
-    ;
 
 }
 $("#filter-sport").change(function () {
