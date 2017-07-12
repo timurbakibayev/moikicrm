@@ -1,56 +1,4 @@
-function newMeal() {
-    var token = localStorage.getItem('token');
-    var url = "/meals/";
-    var xhr = new XMLHttpRequest();
-    var textElement = document.getElementById('new_text');
-    var dateElement = document.getElementById('new_date');
-    var timeElement = document.getElementById('new_time');
-    var caloriesElement = document.getElementById('new_calories');
-    var newObjectErrorsElement = document.getElementById('new_errors');
-    newObjectErrorsElement.innerHTML = "";
-    if (textElement.value == "") {
-        newObjectErrorsElement.innerHTML = "Fill in the meal first";
-        console.log("Meal is not defined");
-        return;
-    }
-    console.log("Initiating new meal");
-    xhr.open('POST', url, true);
-    xhr.setRequestHeader("Authorization", "JWT " + token);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    xhr.addEventListener('load', function () {
-        var responseObject = JSON.parse(this.response);
-        console.log(responseObject);
-        if (this.status == 201) {
-            window.editMealId = responseObject["id"];
-            window.times = 3;
-            load_all();
-            document.getElementById('form_new_meal').reset();
-        } else {
-            var errors = "";
-            for (var k in responseObject) {
-                if (responseObject.hasOwnProperty(k)) {
-                    if (errors != "")
-                        errors += ", ";
-                    console.log(k + ": " + responseObject[k]);
-                    errors += k + ": " + responseObject[k];
-                }
-            }
-            if (errors == "")
-                errors = "Something wrong just happened";
-            newObjectErrorsElement.innerHTML = errors;
-        }
-    });
-    var sendObject = JSON.stringify({
-        text: textElement.value,
-        date: dateElement.value,
-        time: timeElement.value,
-        calories: caloriesElement.value
-    });
-    console.log("Sending", sendObject);
-    xhr.send(sendObject);
-}
-
-function deleteMeal(id, name) {
+function deleteMaster(id, name) {
     if (confirm("Удалить " + name + "?")) {
         var token = localStorage.getItem('token');
         var url = "/masters/" + id.toString() + "/"
@@ -63,21 +11,6 @@ function deleteMeal(id, name) {
         });
         xhr.send(null);
     }
-}
-
-function editMeal(id) {
-    var token = localStorage.getItem('token');
-    var url = "/meals/" + id.toString() + "/";
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.setRequestHeader("Authorization", "JWT " + token);
-    xhr.addEventListener('load', function () {
-        var data = JSON.parse(this.response);
-        console.log(data);
-        console.log(this.status);
-        openEditForm(data);
-    });
-    xhr.send(null);
 }
 
 function openEditForm(data) {
@@ -188,7 +121,7 @@ function saveUserSettings() {
 }
 
 
-function getMeals() {
+function getMasters() {
     var token = localStorage.getItem('token');
     var user = localStorage.getItem('username');
     var url = "/masters/";
@@ -231,7 +164,7 @@ function getMeals() {
                 r[++j] = '<td>'  + "</td>";
                 r[++j] = '<td>' + "</td>";
                 r[++j] = '<td> ' +
-                    ' <a href="#" onclick="deleteMeal(' + data[key]["id"] + ", '" + data[key]["name"] + "'" + ')">Удалить ✘</a> </td>';
+                    ' <a href="#" onclick="deleteMaster(' + data[key]["id"] + ", '" + data[key]["name"] + "'" + ')">Удалить ✘</a> </td>';
                 r[++j] = '</tr>';
             }
 

@@ -25,7 +25,10 @@ def transaction_list(request):
     if request.method == "POST":
         serializer = TransactionSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user_id=user.id, master_id=request.data["master_id"])
+            if "master_id" in request.data:
+                serializer.save(user_id=user.id, master_id=request.data["master_id"])
+            else:
+                serializer.save(user_id=user.id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

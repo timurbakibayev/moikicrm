@@ -62,7 +62,7 @@ function logout() {
 }
 
 function load_all() {
-    getMeals();
+    getMasters();
     getUsers();
     loadResources();
     loadEvents();

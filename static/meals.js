@@ -229,7 +229,7 @@ function getMeals() {
                 r[++j] = '<td>'  + "</td>";
                 r[++j] = '<td>' + "</td>";
                 r[++j] = '<td> ' +
-                    ' <a href="#" onclick="deleteMeal(' + data[key]["id"] + ", '" + data[key]["name"] + "'" + ')">Удалить ✘</a> </td>';
+                    ' <a href="#" onclick="deleteMaster(' + data[key]["id"] + ", '" + data[key]["name"] + "'" + ')">Удалить ✘</a> </td>';
                 r[++j] = '</tr>';
             }
 

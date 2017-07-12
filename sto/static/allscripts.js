@@ -68,7 +68,8 @@ function logout() {
 }
 
 function load_all() {
-    getMeals();
+    getMasters();
+    getTransactions();
     //getUsers();
     loadResources();
     loadEvents();

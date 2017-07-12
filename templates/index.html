@@ -128,12 +128,24 @@
 <ul class="nav nav-tabs" role="tablist" style="margin-top: 80px; margin-left: 2%; margin-right: 2%; zoom: 0.7">
     <li role="presentation" class="active"><a href="#profiles" aria-controls="profiles" role="tab" data-toggle="tab">Работа</a>
     </li>
-    </li>
     <li role="presentation"><a href="#masters" aria-controls="masters" role="tab"
                                data-toggle="tab">Мастера</a>
     </li>
+    <li role="presentation"><a href="#transactions" aria-controls="transactions" role="tab"
+                               data-toggle="tab">Операции</a>
+    </li>
 </ul>
 <div class="tab-content">
+
+    <div role="tabpanel" class="tab-pane active" id="profiles">
+        <div id="users_div"></div>
+        <div id="daypilot_div" style="margin-left: 2%; margin-right: 2%; overflow-y: scroll;">
+            <div id="dp-holder" class="header-content">
+                <div id="dp" style=""></div>
+            </div>
+            <div id="navigator" style="vertical-align: top;position: relative; top: 10%; left: 10%;"></div>
+        </div>
+    </div>
     <div role="tabpanel" class="tab-pane" id="masters">
         <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
             <div id="result"></div>
@@ -149,13 +161,19 @@
         </div>
 
     </div>
-    <div role="tabpanel" class="tab-pane active" id="profiles">
-        <div id="users_div"></div>
-        <div id="daypilot_div" style="margin-left: 2%; margin-right: 2%; overflow-y: scroll;">
-            <div id="dp-holder" class="header-content">
-                <div id="dp" style=""></div>
+    <div role="tabpanel" class="tab-pane" id="transactions">
+        <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
+            <div id="div_transactions"></div>
+            <div class="main-content" style="margin-left: 0%">
+                <form id="form_new_transaction">
+                    <div class="form-inline">
+                        Новая операция: <input type="text" class="form-control" id="new_transaction_text">
+                        Сумма: <input type="number" class="form-control" id="new_transaction_amount">
+                        <button type="submit" class="btn btn-primary btn-primary" style="margin-left: 5px; zoom: 0.8"
+                                id="new_master">Добавить <span class="glyphicon glyphicon-pencil"></span></button>
+                    </div>
+                </form>
             </div>
-            <div id="navigator" style="vertical-align: top;position: relative; top: 10%; left: 10%;"></div>
         </div>
     </div>
 </div>
@@ -356,6 +374,7 @@
 </script>
 <script src="{% static "allscripts.js" %}"></script>
 <script src="{% static "masters.js" %}"></script>
+<script src="{% static "transactions.js" %}"></script>
 <script src="{% static "users.js" %}"></script>
 <script src="{% static "daypilot.js" %}"></script>
 
