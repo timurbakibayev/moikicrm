@@ -68,28 +68,7 @@ function load_all() {
     loadEvents();
 }
 function onLoad() {
-    $('#new_master').click(function (e) {
-        var name = prompt("Введите имя мастера", "Айдос");
-        console.log("adding an master");
-        var token = localStorage.getItem('token');
-        var user = localStorage.getItem('username');
-        var url = "/masters/";
-        var xhr = new XMLHttpRequest();
-        //var resultElement = document.getElementById('users_div');
-        xhr.open('POST', url, true);
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        xhr.setRequestHeader("Authorization", "JWT " + token);
-        xhr.addEventListener('load', function () {
-            var data = JSON.parse(this.response);
-            console.log(data);
-            load_all();
-        });
-        var sendObject = JSON.stringify({
-            name: name
-        });
-        console.log("Sending", sendObject);
-        xhr.send(sendObject);
-    });
+
     $('#login-form-link').click(function (e) {
         $("#login-form").delay(100).fadeIn(100);
         $("#register-form").fadeOut(100);

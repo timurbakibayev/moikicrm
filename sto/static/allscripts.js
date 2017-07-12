@@ -74,30 +74,29 @@ function load_all() {
     loadEvents();
 }
 function onLoad() {
-    $('#new_master').click(function (e) {
-        var name = $("#new_master_name").val();
-        if (name!="") {
-            console.log("adding an master");
-            var token = localStorage.getItem('token');
-            var user = localStorage.getItem('username');
-            var url = "/masters/";
-            var xhr = new XMLHttpRequest();
-            //var resultElement = document.getElementById('users_div');
-            xhr.open('POST', url, true);
-            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-            xhr.setRequestHeader("Authorization", "JWT " + token);
-            xhr.addEventListener('load', function () {
-                var data = JSON.parse(this.response);
-                console.log(data);
-                $("#new_master_name").val("")
-                load_all();
-            });
-            var sendObject = JSON.stringify({
-                name: name
-            });
-            console.log("Sending", sendObject);
-            xhr.send(sendObject);
-        }
+    $('#form_new_master').submit(function (e) {
+        var name = $('#new_master_name').val();
+        $('#new_master_name').val("");
+        console.log("adding an master");
+        var token = localStorage.getItem('token');
+        var user = localStorage.getItem('username');
+        var url = "/masters/";
+        var xhr = new XMLHttpRequest();
+        //var resultElement = document.getElementById('users_div');
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        xhr.setRequestHeader("Authorization", "JWT " + token);
+        xhr.addEventListener('load', function () {
+            var data = JSON.parse(this.response);
+            console.log(data);
+            load_all();
+        });
+        var sendObject = JSON.stringify({
+            name: name
+        });
+        console.log("Sending", sendObject);
+        xhr.send(sendObject);
+        e.preventDefault();
     });
     $('#login-form-link').click(function (e) {
         $("#login-form").delay(100).fadeIn(100);
