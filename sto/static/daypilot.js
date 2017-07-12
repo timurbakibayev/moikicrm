@@ -1,19 +1,7 @@
 var sorting = "empty";
 var nav = new DayPilot.Navigator("navigator");
-nav.onTimeRangeSelected = function (args) {
-    var day = args.day;
-    //day.setHours(8,0,0)
-    //var start = day.substring(0,10) + " 08:00:00";
-    //var start = day;
-    //var days = day.daysInMonth();
-    dp.startDate = day;
-    dp.days = 1
-    //alert(day)
-    dp.cornerHtml = cornerHtml();
-    document.getElementById('navigator').style.display = "none";
-    dp.update();
-    loadEvents();
-};
+
+
 nav.init();
 
 
@@ -98,9 +86,22 @@ dp.onIncludeTimeCell = function (args) {
 };
 
 dp.onTimeRangeSelected = function (args) {
-    var description = prompt("Введите описание", "Ремонт двигателя RAV4");
-    if (description == null)
-        return;
+    var textArray = [
+        'Ремонт двигателя RAV4',
+        'Сварка Toyota Crown',
+        'Ходовая HONDA CRV',
+        'Полировка фар VW',
+        'Бензонасос Mercedes',
+        'Стартер Camry 2010',
+    ];
+    args_g = args;
+    $('#myModalNewEvent').modal('show');
+    var randomNumber = Math.floor(Math.random() * textArray.length);
+    var description = "";
+    //var description = prompt("Введите описание", textArray[randomNumber]);
+    //$('#new_event_text').placeholder(textArray[randomNumber]);
+    // if (description == null)
+    //     return;
     console.log("adding an event");
     // var url = "/new/start=" + args.start + "/end=" + args.end + "/resource=" + args.resource;
     // $('#ahref1').prop("href", url);
@@ -110,8 +111,14 @@ dp.onTimeRangeSelected = function (args) {
     //     $('#myModal').removeData();
     //     loadEvents();
     // });
+
+};
+
+var args_g;
+$("#form_new_event").submit(function (event) {
     var token = localStorage.getItem('token');
     var user = localStorage.getItem('username');
+    var resultElement = document.getElementById('new-event-error-div');
     var url = "/events/";
     var xhr = new XMLHttpRequest();
     //var resultElement = document.getElementById('users_div');
@@ -120,20 +127,34 @@ dp.onTimeRangeSelected = function (args) {
     xhr.setRequestHeader("Authorization", "JWT " + token);
     xhr.addEventListener('load', function () {
         var data = JSON.parse(this.response);
-        console.log(data);
-        dp.message("Работа добавлена");
-        loadEvents();
-        dp.update();
+        if (this.status == 401) {
+            resultElement.innerHTML = "No credentials provided";
+        } else if (this.status == 201) {
+            console.log(data);
+            //dp.message("Работа добавлена");
+            loadEvents();
+            dp.update();
+            $('#new_event_price').val(0);
+            $('#new_event_text').val("");
+            $('#myModalNewEvent').modal('hide');
+        } else {
+            resultElement.innerHTML = "Введите корректные данные";
+        }
     });
+
     var sendObject = JSON.stringify({
-        date_time_from: args.start,
-        date_time_to: args.end,
-        master_id: args.resource,
-        text: description
+        date_time_from: args_g.start,
+        date_time_to: args_g.end,
+        master_id: args_g.resource,
+        text: $('#new_event_text').val(),
+        price: $('#new_event_price').val()
     });
     console.log("Sending", sendObject);
     xhr.send(sendObject);
-};
+
+    event.preventDefault();
+});
+
 
 dp.onEventResized = function (args) {
     console.log("resizing a resourse " + args.e.text)
@@ -188,7 +209,7 @@ dp.onEventMoved = function (args) {
 };
 
 
-dp.eventHeight = 40;
+dp.eventHeight = 50;
 
 dp.onBeforeEventRender = function (args) {
     var start = new DayPilot.Date(args.e.start);
@@ -203,6 +224,7 @@ dp.onBeforeEventRender = function (args) {
     //if (approved) {
     args.e.barColor = 'green';
     args.e.html = args.e.html + "<br /><span style='color:gray' >" + start.toString("hh:mm") + "-" + end.toString("hh:mm") + "</span>";
+    args.e.html = args.e.html + "<br /><span style='color:"+(args.e.price==0?"gray":(args.e.price>0?"green":"red"))+"' >" + args.e.price + "</span>";
 
     args.e.toolTip = args.e.bubbleHtml;
     //args.e.html = args.e.html + "<br /><span style='color:gray' >" + start.toString("hh:mm") + "<br>" + end.toString("hh:mm") + "</span>";
@@ -290,7 +312,7 @@ function loadEvents() {
     console.log("loading events")
     var token = localStorage.getItem('token');
     var user = localStorage.getItem('username');
-    var url = "/events/?start="+start.toString()+"&end="+end.toString();
+    var url = "/events/?start=" + start.toString() + "&end=" + end.toString();
     var xhr = new XMLHttpRequest();
     //var resultElement = document.getElementById('users_div');
     xhr.open('GET', url, true);
@@ -305,6 +327,7 @@ function loadEvents() {
             for (var key = 0, size = data.length; key < size; key++) {
                 events.push({
                     text: data[key]["text"], id: data[key]["id"],
+                    price: (data[key]["price"]==null?0:data[key]["price"]),
                     resource: data[key]["master_id"],
                     start: data[key]["date_time_from"],
                     end: data[key]["date_time_to"],

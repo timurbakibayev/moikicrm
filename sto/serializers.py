@@ -6,6 +6,7 @@ from sto.models import Message
 from sto.models import Event
 from sto.models import Master
 from sto.models import Subscription
+from sto.models import Transaction
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -52,4 +53,11 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ('id', 'user', 'master_id', 'date_time_from', 'date_time_to', 'text', 'price', 'dialog_id')
+        read_only_fields = ("id", "user")
+
+
+class TransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Transaction
+        fields = ('id', 'user', 'master_id', 'date_time', 'text', 'amount')
         read_only_fields = ("id", "user")

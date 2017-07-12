@@ -129,12 +129,12 @@
     <li role="presentation" class="active"><a href="#profiles" aria-controls="profiles" role="tab" data-toggle="tab">Работа</a>
     </li>
     </li>
-    <li role="presentation"><a href="#meals" aria-controls="meals" role="tab"
+    <li role="presentation"><a href="#masters" aria-controls="masters" role="tab"
                                data-toggle="tab">Мастера</a>
     </li>
 </ul>
 <div class="tab-content">
-    <div role="tabpanel" class="tab-pane" id="meals">
+    <div role="tabpanel" class="tab-pane" id="masters">
         <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
             <div id="result"></div>
             <div class="main-content" style="margin-left: 0%">
@@ -242,7 +242,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-6">
-                                <a href="#" class="active" id="login-form-link">New Job</a>
+                                <a href="#" class="active" id="login-form-link">Новая работа</a>
                             </div>
                         </div>
                         <hr>
@@ -250,30 +250,25 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                <form id="user-settings-form" method="post" role="form" style="display: block;">
-                                    Username:
+                                <form id="form_new_event" method="post" role="form" style="display: block;">
+                                    Описание:
                                     <div class="form-group">
-                                        <label name="settings_username" id="settings_username" class="form-control"
-                                               placeholder="Username">{{ user.username }}</label>
+                                        <input id="new_event_text" class="form-control"
+                                               placeholder="Описание работы">
                                     </div>
-                                    Daily calories:
+                                    Стоимость работы:
                                     <div class="form-group">
-                                        <input type="number" name="settings_calories" id="settings_calories"
-                                               class="form-control" placeholder="Username"
+                                        <input type="number" id="new_event_price"
+                                               class="form-control" placeholder="Стоимость"
                                                value="{{ profile.calories }}" contenteditable="false">
                                     </div>
-                                    New password
-                                    <div class="form-group">
-                                        <input type="settings_password" name="settings_password" id="settings_password"
-                                               class="form-control" placeholder="New Password">
-                                    </div>
-                                    <div id="login-error-div"
+                                    <div id="new-event-error-div"
                                          style="margin-bottom: 10px; text-align: center; color: red"></div>
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
-                                                <input type="submit" name="login-submit" id="login-submit"
-                                                       class="form-control btn btn-login" value="Save">
+                                                <input type="submit"
+                                                       class="form-control btn btn-login" value="Добавить">
                                             </div>
                                         </div>
                                     </div>
@@ -360,7 +355,7 @@
     ];
 </script>
 <script src="{% static "allscripts.js" %}"></script>
-<script src="{% static "meals.js" %}"></script>
+<script src="{% static "masters.js" %}"></script>
 <script src="{% static "users.js" %}"></script>
 <script src="{% static "daypilot.js" %}"></script>
 

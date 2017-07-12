@@ -59,3 +59,11 @@ class Event(models.Model):
     text = models.TextField(max_length=1000)
     price = models.IntegerField(null=True, blank=True)
     dialog_id = models.IntegerField(null=True, blank=True)
+
+
+class Transaction(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    master = models.ForeignKey(Master, on_delete=models.CASCADE, blank=True, null=True)
+    date_time = models.DateTimeField(auto_now=True)
+    text = models.TextField(max_length=1000)
+    amount = models.IntegerField(null=True, blank=True)
