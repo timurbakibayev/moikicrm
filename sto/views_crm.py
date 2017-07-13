@@ -13,6 +13,7 @@ from sto.models import Dialog
 from sto.models import Message
 from sto.models import Event
 from sto.models import Master
+from sto.models import Transaction
 
 
 
@@ -67,6 +68,19 @@ def events_list(request):
     events = Event.objects.filter(user=user)
 
     if request.method == "GET":
+        if request.GET.get("fix"):
+            events = events.filter(transaction_created=False)
+            for event in events:
+                t = Transaction()
+                t.user_id = user.id
+                t.master = event.master
+                t.amount = event.price
+                t.text = event.text + " #" + event.master.name
+                t.save()
+                event.transaction_created = True
+                event.save()
+            serializer = EventSerializer(events, many=True)
+            return Response(serializer.data)
         if request.GET.get("start"):
             date_from = request.GET.get("start").strip()
             events = events.filter(date_time_to__gte=date_from)
@@ -100,9 +114,14 @@ def event_detail(request, pk):
         return Response(serializer.data)
 
     elif request.method == "PUT":
+        if event.transaction_created:
+            return Response({"detail":["Transaction is already created"]}, status=status.HTTP_400_BAD_REQUEST)
         serializer = EventSerializer(event, data=request.data, partial=True)
         if serializer.is_valid():
-            serializer.save()
+            if "master_id" in request.data:
+                serializer.save(master_id = request.data["master_id"])
+            else:
+                serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

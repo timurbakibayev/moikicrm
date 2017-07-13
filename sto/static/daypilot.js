@@ -92,10 +92,18 @@ dp.onTimeRangeSelected = function (args) {
         'Ходовая HONDA CRV',
         'Полировка фар VW',
         'Бензонасос Mercedes',
-        'Стартер Camry 2010',
+        'Стартер Camry 2010'
     ];
     args_g = args;
-    $('#myModalNewEvent').modal('show');
+
+    $('#myModalNewEvent').on('shown.bs.modal', function () {
+        setTimeout(function () {
+            $('#new_event_text').focus();
+            alert("ddd");
+        }, 300);
+
+    }).modal('show');
+    //$('#myModalNewEvent').modal('show');
     var randomNumber = Math.floor(Math.random() * textArray.length);
     var description = "";
     //var description = prompt("Введите описание", textArray[randomNumber]);
@@ -103,16 +111,9 @@ dp.onTimeRangeSelected = function (args) {
     // if (description == null)
     //     return;
     console.log("adding an event");
-    // var url = "/new/start=" + args.start + "/end=" + args.end + "/resource=" + args.resource;
-    // $('#ahref1').prop("href", url);
-    // $('#ahref1').click();
-    // $('#myModal').on('hidden.bs.modal', function () {
-    //     dp.clearSelection();
-    //     $('#myModal').removeData();
-    //     loadEvents();
-    // });
 
 };
+
 
 var args_g;
 $("#form_new_event").submit(function (event) {
@@ -170,8 +171,10 @@ dp.onEventResized = function (args) {
     xhr.addEventListener('load', function () {
         var data = JSON.parse(this.response);
         console.log(data);
-        dp.message("Изменение времени выполнено");
+        if (this.status != 200)
+            dp.message("Невозможно изменить");
         dp.update();
+        loadEvents();
     });
     var sendObject = JSON.stringify({
         date_time_from: args.newStart.toString(),
@@ -195,13 +198,15 @@ dp.onEventMoved = function (args) {
     xhr.addEventListener('load', function () {
         var data = JSON.parse(this.response);
         console.log(data);
-        dp.message("Перенос работы выполнен");
+        if (this.status != 200)
+            dp.message("Невозможно перенести");
         dp.update();
+        loadEvents();
     });
     var sendObject = JSON.stringify({
         date_time_from: args.newStart.toString(),
         date_time_to: args.newEnd.toString(),
-        master: args.newResource.toString(),
+        master_id: args.newResource,
     });
     console.log("Sending", sendObject);
     xhr.send(sendObject);
@@ -221,10 +226,12 @@ dp.onBeforeEventRender = function (args) {
     var paidColor = "#aaaaaa";
 
     args.e.html = args.e.text;
-    //if (approved) {
-    args.e.barColor = 'green';
+    if (args.e.fixed)
+        args.e.barColor = 'green';
+    else
+        args.e.barColor = 'gray';
     args.e.html = args.e.html + "<br /><span style='color:gray' >" + start.toString("hh:mm") + "-" + end.toString("hh:mm") + "</span>";
-    args.e.html = args.e.html + "<br /><span style='color:"+(args.e.price==0?"gray":(args.e.price>0?"green":"red"))+"' >" + args.e.price + "</span>";
+    args.e.html = args.e.html + "<br /><span style='color:" + (args.e.price == 0 ? "gray" : (args.e.price > 0 ? "green" : "red")) + "' >" + args.e.price + "</span>";
 
     args.e.toolTip = args.e.bubbleHtml;
     //args.e.html = args.e.html + "<br /><span style='color:gray' >" + start.toString("hh:mm") + "<br>" + end.toString("hh:mm") + "</span>";
@@ -327,7 +334,8 @@ function loadEvents() {
             for (var key = 0, size = data.length; key < size; key++) {
                 events.push({
                     text: data[key]["text"], id: data[key]["id"],
-                    price: (data[key]["price"]==null?0:data[key]["price"]),
+                    fixed: data[key]["transaction_created"],
+                    price: (data[key]["price"] == null ? 0 : data[key]["price"]),
                     resource: data[key]["master_id"],
                     start: data[key]["date_time_from"],
                     end: data[key]["date_time_to"],
@@ -357,6 +365,27 @@ $("#filter-sport").change(function () {
 $("#filter-lang").change(function () {
     loadResources();
 });
+
+
+$("#events_to_transactions").click(function () {
+    console.log("fixing events to transactions")
+    var token = localStorage.getItem('token');
+    var user = localStorage.getItem('username');
+    var url = "/events/?fix=1";
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader("Authorization", "JWT " + token);
+    xhr.addEventListener('load', function () {
+        var data = JSON.parse(this.response);
+        console.log(data);
+        if (this.status == 200) {
+            load_all();
+            dp.message("Все работы успешно утверждены");
+            dp.update();
+        }
+    });
+    xhr.send(null);
+})
 document.getElementById('navigator').style.display = "none";
 showCalendar = function () {
     var pos = $("#date_ahref").position();

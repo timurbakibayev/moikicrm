@@ -59,6 +59,10 @@ class Event(models.Model):
     text = models.TextField(max_length=1000)
     price = models.IntegerField(null=True, blank=True)
     dialog_id = models.IntegerField(null=True, blank=True)
+    transaction_created = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["date_time_from"]
 
 
 class Transaction(models.Model):
@@ -67,3 +71,7 @@ class Transaction(models.Model):
     date_time = models.DateTimeField(auto_now=True)
     text = models.TextField(max_length=1000)
     amount = models.IntegerField(null=True, blank=True)
+    event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ["date_time"]

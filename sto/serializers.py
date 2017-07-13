@@ -52,12 +52,14 @@ class MasterSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ('id', 'user', 'master_id', 'date_time_from', 'date_time_to', 'text', 'price', 'dialog_id')
+        fields = ('id', 'user', 'master_id', 'date_time_from', 'date_time_to', 'text', 'price', 'dialog_id', 'transaction_created')
         read_only_fields = ("id", "user")
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+    date_time = serializers.DateTimeField()
+
     class Meta:
         model = Transaction
-        fields = ('id', 'user', 'master_id', 'date_time', 'text', 'amount')
+        fields = ('id', 'user', 'master_id', 'date_time', 'text', 'amount', 'event_id')
         read_only_fields = ("id", "user")

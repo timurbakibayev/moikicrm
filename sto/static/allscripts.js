@@ -73,6 +73,8 @@ function load_all() {
     //getUsers();
     loadResources();
     loadEvents();
+    dp.update();
+    //dp.scrollTo(new DayPilot.Date());
 }
 function onLoad() {
     $('#form_new_master').submit(function (e) {
@@ -134,9 +136,9 @@ function onLoad() {
         newMeal(event);
         event.preventDefault();
     });
-    $("#edit_meal_form").submit(function (event) {
-        saveChanges();
+    $("#edit_transaction_form").submit(function (event) {
         event.preventDefault();
+        saveTransactionChanges();
     });
     $("#filter_form").submit(function (event) {
         load_all();

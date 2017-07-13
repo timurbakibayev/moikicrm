@@ -131,8 +131,11 @@
     <li role="presentation"><a href="#masters" aria-controls="masters" role="tab"
                                data-toggle="tab">Мастера</a>
     </li>
-    <li role="presentation"><a href="#transactions" aria-controls="transactions" role="tab"
-                               data-toggle="tab">Операции</a>
+    <li role="presentation"><a href="#expenses" aria-controls="expenses" role="tab"
+                               data-toggle="tab">Расходы</a>
+    </li>
+    <li role="presentation"><a href="#income" aria-controls="income" role="tab"
+                               data-toggle="tab">Доходы</a>
     </li>
 </ul>
 <div class="tab-content">
@@ -145,6 +148,24 @@
             </div>
             <div id="navigator" style="vertical-align: top;position: relative; top: 10%; left: 10%;"></div>
         </div>
+
+
+        <table class="table">
+            <tr>
+                <div class="row" style="margin-left: 2%; margin-top: 15px;">
+                    <div class="column padding-reset">
+                        <div class="ui huge message page grid">
+                            <p>Для того, чтобы перенести всю работу во вкладку "Доходы" и сделать её недоступной для
+                                удаления или редактирования, нажмите кнопку "Утвердить". Утвержденная работа будет
+                                отражаться во всех отчетах.</p>
+                            <a style="margin-left: 2%; margin-top: 15px; zoom: 0.8" href="#"
+                               class="btn btn-warning" id="events_to_transactions"><span
+                                    class="glyphicon glyphicon-ok-circle"></span> Утвердить</a>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+        </table>
     </div>
     <div role="tabpanel" class="tab-pane" id="masters">
         <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
@@ -161,14 +182,29 @@
         </div>
 
     </div>
-    <div role="tabpanel" class="tab-pane" id="transactions">
+    <div role="tabpanel" class="tab-pane" id="expenses">
         <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
-            <div id="div_transactions"></div>
+            <div id="div_transactions_expenses"></div>
             <div class="main-content" style="margin-left: 0%">
-                <form id="form_new_transaction">
+                <form id="form_new_transaction_expenses">
                     <div class="form-inline">
-                        Новая операция: <input type="text" class="form-control" id="new_transaction_text">
-                        Сумма: <input type="number" class="form-control" id="new_transaction_amount">
+                        Новый расход: <input type="text" class="form-control" id="new_transaction_e_text">
+                        Сумма: <input type="number" class="form-control" id="new_transaction_e_amount">
+                        <button type="submit" class="btn btn-primary btn-primary" style="margin-left: 5px; zoom: 0.8"
+                                id="new_master">Добавить <span class="glyphicon glyphicon-pencil"></span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="income">
+        <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
+            <div id="div_transactions_income"></div>
+            <div class="main-content" style="margin-left: 0%">
+                <form id="form_new_transaction_income">
+                    <div class="form-inline">
+                        Новый доход: <input type="text" class="form-control" id="new_transaction_i_text">
+                        Сумма: <input type="number" class="form-control" id="new_transaction_i_amount">
                         <button type="submit" class="btn btn-primary btn-primary" style="margin-left: 5px; zoom: 0.8"
                                 id="new_master">Добавить <span class="glyphicon glyphicon-pencil"></span></button>
                     </div>
@@ -308,24 +344,16 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="edit_modal_header">Edit</h4>
             </div>
-            <form id="edit_meal_form">
+            <form id="edit_transaction_form">
                 <div class="modal-body">
                     <div class="input-group">
-                        <label for="edit_text">Meal</label>
+                        <label for="edit_text">Описание операции</label>
                         <input type="text" name="edit_text" id="edit_text" class="form-control" placeholder="New Meal">
                     </div>
                     <div class="input-group">
-                        <label for="edit_date">Date</label>
-                        <input type="date" name="edit_date" id="edit_date" class="form-control">
-                    </div>
-                    <div class="input-group">
-                        <label for="edit_time">Time</label>
-                        <input type="time" name="edit_time" id="edit_time" class="form-control">
-                    </div>
-                    <div class="input-group">
-                        <label for="edit_calories">Calories</label>
-                        <input type="number" name="edit_calories" id="edit_calories" class="form-control"
-                               placeholder="Number of calories">
+                        <label for="edit_calories">Сумма</label>
+                        <input type="number" id="edit_amount" class="form-control"
+                               placeholder="Сумма">
                     </div>
                 </div>
                 <div class="modal-footer">

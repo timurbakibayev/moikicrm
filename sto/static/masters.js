@@ -13,13 +13,11 @@ function deleteMaster(id, name) {
     }
 }
 
-function openEditForm(data) {
-    var token = localStorage.getItem('token');
-    var url = "/meals/"
-    var xhr = new XMLHttpRequest();
+
+function openEditMasterForm(data) {
     var modalHeader = document.getElementById('edit_modal_header');
     modalHeader.innerHTML = "Edit '" + data["text"] + "'";
-    window.editMealId = data["id"];
+    window.editTransactionId = data["id"];
     $('#edit_text').val(data["text"]);
     $('#edit_date').val(data["date"]);
     $('#edit_time').val(data["time"]);
@@ -27,51 +25,7 @@ function openEditForm(data) {
     $('#editModalForm').modal('show');
 }
 
-function saveChanges() {
-    var mealId = window.editMealId.toString();
-    $('#editModalForm').modal('hide');
-    var editText = $('#edit_text').val();
-    var editDate = $('#edit_date').val();
-    var editTime = $('#edit_time').val();
-    var editCalories = $('#edit_calories').val();
 
-    var token = localStorage.getItem('token');
-    var url = "/meals/" + mealId + "/";
-    var xhr = new XMLHttpRequest();
-    xhr.open('PUT', url, true);
-    xhr.setRequestHeader("Authorization", "JWT " + token);
-    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    xhr.addEventListener('load', function () {
-        var responseObject = JSON.parse(this.response);
-        console.log(responseObject);
-        if (this.status < 300) {
-            load_all();
-        } else {
-            var errors = "";
-            if (responseObject.detail)
-                errors = responseObject.detail;
-            else {
-                for (var k in responseObject) {
-                    if (responseObject.hasOwnProperty(k)) {
-                        console.log(k + ": " + responseObject[k]);
-                        errors += k + ": " + responseObject[k] + "\n";
-                    }
-                }
-                if (errors == "")
-                    errors = "Something wrong just happened";
-                alert(errors);
-            }
-        }
-    });
-    var sendObject = JSON.stringify({
-        text: editText,
-        date: editDate,
-        time: editTime,
-        calories: editCalories
-    });
-    console.log("Sending", sendObject);
-    xhr.send(sendObject);
-}
 
 function saveUserSettings() {
     $('#myModalDaily').modal('hide');
