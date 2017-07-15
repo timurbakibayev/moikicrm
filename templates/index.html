@@ -16,7 +16,6 @@
     <!-- Theme CSS-->
     <link href="{% static "css/creative.min.css" %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static "bootstrap-theme.min.css" %}">
-    <script src='https://www.google.com/recaptcha/api.js'></script>
     <script type="text/javascript" src="{% static "jquery-git.min.js" %}"></script>
     <script type="text/javascript" src="{% static "jquery-ui.min.js" %}"></script>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -30,72 +29,9 @@
     <link rel="stylesheet" type="text/css" href="{% static "login.css" %}">
     <script src="{% static "bootstrap.min.js" %}"></script>
     <style>
-        .ui-autocomplete {
-            position: absolute;
-            border-radius: 3px;
-            top: 0;
-            left: 0;
-            cursor: default;
-            min-width: 100px;
-            max-width: 100%;
-            max-height: 100px;
-            background: #ffffff;
-            color: #000000;
-            z-index: 9999999 !important;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-    </style>
-    <style type="text/css">
-        .overflow {
-            position: relative;
-            width: 80%;
-            margin-left: 10%;
-            height: 300px;
-            overflow-y: auto;
-            background: #333;
-            color: #fff;
-        }
-
         .scheduler_default_corner div:nth-of-type(4) {
             display: none !important;
         }
-
-        .scheduler_white_rowheader {
-            background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#dddddd));
-            background: -moz-linear-gradient(top, #eeeeee 0%, #dddddd);
-            background: -ms-linear-gradient(top, #eeeeee 0%, #dddddd);
-            background: -webkit-linear-gradient(top, #eeeeee 0%, #dddddd);
-            background: linear-gradient(top, #eeeeee 0%, #dddddd);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorStr="#eeeeee", endColorStr="#dddddd");
-
-        }
-
-        .scheduler_white_rowheader_inner {
-            border-right: 1px solid #ccc;
-        }
-
-        .scheduler_white_rowheadercol2 {
-            background: White;
-        }
-
-        .scheduler_white_rowheadercol2 .scheduler_white_rowheader_inner {
-            top: 2px;
-            bottom: 2px;
-            left: 2px;
-            background-color: transparent;
-            border-left: 5px solid #1a9d13; /* green */
-            border-right: 0px none;
-        }
-
-        .status_dirty.scheduler_white_rowheadercol2 .scheduler_white_rowheader_inner {
-            border-left: 5px solid #ea3624; /* red */
-        }
-
-        .status_cleanup.scheduler_white_rowheadercol2 .scheduler_white_rowheader_inner {
-            border-left: 5px solid #f9ba25; /* orange */
-        }
-
     </style>
 </head>
 <body onload="onLoad()">
@@ -150,30 +86,27 @@
         </div>
 
 
-        <table class="table">
-            <tr>
-                <div class="row" style="margin-left: 2%; margin-top: 15px;">
-                    <div class="column padding-reset">
-                        <div class="ui huge message page grid">
-                            <p>Для того, чтобы перенести всю работу во вкладку "Доходы" и сделать её недоступной для
-                                удаления или редактирования, нажмите кнопку "Утвердить". Утвержденная работа будет
-                                отражаться во всех отчетах.</p>
-                            <a style="margin-left: 2%; margin-top: 15px; zoom: 0.8" href="#"
-                               class="btn btn-warning" id="events_to_transactions"><span
-                                    class="glyphicon glyphicon-ok-circle"></span> Утвердить</a>
-                        </div>
-                    </div>
+        <div class="row" style="margin-left: 2%; margin-top: 15px;">
+            <div class="column padding-reset">
+                <div class="ui huge message page grid">
+                    <p>Для того, чтобы перенести всю работу во вкладку "Доходы" и сделать её недоступной для
+                        удаления или редактирования, нажмите кнопку "Утвердить". Утвержденная работа будет
+                        отражаться во всех отчетах.</p>
+                    <a style="margin-left: 2%; margin-top: 15px; zoom: 0.8" href="#"
+                       class="btn btn-warning" id="events_to_transactions"><span
+                            class="glyphicon glyphicon-ok-circle"></span> Утвердить</a>
                 </div>
-            </tr>
-        </table>
+            </div>
+        </div>
     </div>
     <div role="tabpanel" class="tab-pane" id="masters">
         <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
             <div id="result"></div>
-            <div class="main-content" style="margin-left: 0%">
+            <div class="main-content" style="margin-left: 0">
                 <form id="form_new_master">
                     <div class="form-inline">
-                        Новый мастер: <input type="text" class="form-control" id="new_master_name">
+                        <label for="new_master_name">Новый мастер:</label><input type="text" class="form-control"
+                                                                                 id="new_master_name">
                         <button type="submit" class="btn btn-primary btn-primary" style="margin-left: 5px; zoom: 0.8"
                                 id="new_master">Добавить <span class="glyphicon glyphicon-pencil"></span></button>
                     </div>
@@ -185,11 +118,15 @@
     <div role="tabpanel" class="tab-pane" id="expenses">
         <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
             <div id="div_transactions_expenses"></div>
-            <div class="main-content" style="margin-left: 0%">
+            <div class="main-content" style="margin-left: 0">
                 <form id="form_new_transaction_expenses">
                     <div class="form-inline">
-                        Новый расход: <input type="text" class="form-control" id="new_transaction_e_text">
-                        Сумма: <input type="number" class="form-control" id="new_transaction_e_amount">
+                        <label for="new_date_e">Дата:</label><input type="date" id="new_date_e" class="form-control"
+                                                                    value="{{ today|date:"Y-m-d" }}">
+                        <label for="new_transaction_e_text">Новый расход:</label><input type="text" class="form-control"
+                                                                                        id="new_transaction_e_text">
+                        <label for="new_transaction_e_amount">Сумма:</label><input type="number" class="form-control"
+                                                                                   id="new_transaction_e_amount">
                         <button type="submit" class="btn btn-primary btn-primary" style="margin-left: 5px; zoom: 0.8"
                                 id="new_master">Добавить <span class="glyphicon glyphicon-pencil"></span></button>
                     </div>
@@ -200,11 +137,15 @@
     <div role="tabpanel" class="tab-pane" id="income">
         <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
             <div id="div_transactions_income"></div>
-            <div class="main-content" style="margin-left: 0%">
+            <div class="main-content" style="margin-left: 0">
                 <form id="form_new_transaction_income">
                     <div class="form-inline">
-                        Новый доход: <input type="text" class="form-control" id="new_transaction_i_text">
-                        Сумма: <input type="number" class="form-control" id="new_transaction_i_amount">
+                        <label for="new_date_i">Дата:</label><input type="date" id="new_date_i" class="form-control"
+                                                                    value="{{ today|date:"Y-m-d" }}">
+                        <label for="new_transaction_i_text">Новый доход:</label><input type="text" class="form-control"
+                                                                                       id="new_transaction_i_text">
+                        <label for="new_transaction_i_amount">Сумма:</label><input type="number" class="form-control"
+                                                                                   id="new_transaction_i_amount">
                         <button type="submit" class="btn btn-primary btn-primary" style="margin-left: 5px; zoom: 0.8"
                                 id="new_master">Добавить <span class="glyphicon glyphicon-pencil"></span></button>
                     </div>
@@ -347,6 +288,10 @@
             <form id="edit_transaction_form">
                 <div class="modal-body">
                     <div class="input-group">
+                        <label for="edit_date">Дата</label>
+                        <input type="date" name="edit_date" id="edit_date" class="form-control">
+                    </div>
+                    <div class="input-group">
                         <label for="edit_text">Описание операции</label>
                         <input type="text" name="edit_text" id="edit_text" class="form-control" placeholder="New Meal">
                     </div>
@@ -395,11 +340,6 @@
     <!-- /.modal-dialog -->
 </div>
 
-<script language="javascript">
-    var availableTags = [
-        {% for item in autocomplete %}"{{ item }}",{% endfor %}
-    ];
-</script>
 <script src="{% static "allscripts.js" %}"></script>
 <script src="{% static "masters.js" %}"></script>
 <script src="{% static "transactions.js" %}"></script>

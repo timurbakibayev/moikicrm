@@ -75,7 +75,8 @@ def events_list(request):
                 t.user_id = user.id
                 t.master = event.master
                 t.amount = event.price
-                t.text = event.text + " #" + event.master.name
+                t.date = event.date_time_from
+                t.text = event.text + " #" + event.master.name.replace(" ","_")
                 t.save()
                 event.transaction_created = True
                 event.save()

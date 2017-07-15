@@ -69,9 +69,10 @@ class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     master = models.ForeignKey(Master, on_delete=models.CASCADE, blank=True, null=True)
     date_time = models.DateTimeField(auto_now=True)
+    date = models.DateField()
     text = models.TextField(max_length=1000)
     amount = models.IntegerField(null=True, blank=True)
     event = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ["date_time"]
+         ordering = ["-date","id"]

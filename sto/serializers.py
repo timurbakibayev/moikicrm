@@ -57,9 +57,9 @@ class EventSerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
-    date_time = serializers.DateTimeField()
+    #date_time = serializers.DateTimeField()
 
     class Meta:
         model = Transaction
-        fields = ('id', 'user', 'master_id', 'date_time', 'text', 'amount', 'event_id')
+        fields = ('id', 'user', 'master_id', 'date_time', 'date', 'text', 'amount', 'event_id')
         read_only_fields = ("id", "user")

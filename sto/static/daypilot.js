@@ -1,6 +1,21 @@
 var sorting = "empty";
 var nav = new DayPilot.Navigator("navigator");
 
+nav.onTimeRangeSelected = function(args) {
+    var day = args.day;
+    //day.setHours(8,0,0)
+    //var start = day.substring(0,10) + " 08:00:00";
+    //var start = day;
+    //var days = day.daysInMonth();
+    dp.startDate = day;
+    dp.days=1;
+    //alert(day)
+    dp.cornerHtml = cornerHtml();
+    document.getElementById('navigator').style.display = "none";
+    dp.update();
+    loadEvents();
+};
+
 
 nav.init();
 
@@ -353,6 +368,7 @@ function loadEvents() {
             //         text: "Event 1"
             //     }
             // ];
+            dp.clearSelection();
             dp.update();
         }
     });

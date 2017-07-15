@@ -11,9 +11,9 @@ from sto.models import Transaction
 @api_view(["GET", "POST"])
 def transaction_list(request):
     user = request.user
-    transactions = Transaction.objects.filter(user=user)
 
     if request.method == "GET":
+        transactions = Transaction.objects.filter(user=user)
         if request.GET.get("start"):
             date_from = request.GET.get("start").strip()
             transactions = transactions.filter(date_time__gte=date_from)
@@ -37,6 +37,7 @@ def transaction_list(request):
 def transaction_detail(request, pk):
     try:
         transaction = Transaction.objects.get(pk=pk)
+        old_date_time = transaction.date_time
     except Transaction.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

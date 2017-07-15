@@ -1,4 +1,5 @@
 function deleteTransaction(id, name) {
+    window.editTransactionId = -1;
     if (confirm("Удалить " + name + "?")) {
         var token = localStorage.getItem('token');
         var url = "/transactions/" + id.toString() + "/"
@@ -17,6 +18,7 @@ function openEditTransactionForm(data) {
     var modalHeader = document.getElementById('edit_modal_header');
     modalHeader.innerHTML = "Редактирование операции '" + data["text"] + "'";
     window.editTransactionId = data["id"];
+    $('#edit_date').val(data["date"]);
     $('#edit_text').val(data["text"]);
     $('#edit_amount').val(data["amount"]);
     $('#editModalForm').modal('show');
@@ -41,6 +43,7 @@ function editTransaction(id) {
 function saveTransactionChanges() {
     var transactionId = window.editTransactionId.toString();
     $('#editModalForm').modal('hide');
+    var editDate = $('#edit_date').val();
     var editText = $('#edit_text').val();
     var editAmount = $('#edit_amount').val();
 
@@ -73,6 +76,7 @@ function saveTransactionChanges() {
         }
     });
     var sendObject = JSON.stringify({
+        date: editDate,
         text: editText,
         amount: editAmount
     });
@@ -125,7 +129,7 @@ function getTransactions() {
                         rI[++j] = '<tr class="changed">';
                     else
                         rI[++j] = '<tr>';
-                    rI[++j] = '<td>' + data[key]["date_time"].substring(0, 16) + "</td>";//10
+                    rI[++j] = '<td>' + data[key]["date"].substring(0, 16) + "</td>";//10
                     rI[++j] = '<td>' + data[key]["text"].replace(/<(?:.|\n)*?>/gm, '') + "</td>";
                     rI[++j] = '<td style="color: green">' + data[key]["amount"] + "</td>";
                     rI[++j] = '<td>' + "</td>";
@@ -137,7 +141,7 @@ function getTransactions() {
                         rE[++j] = '<tr class="changed">';
                     else
                         rE[++j] = '<tr>';
-                    rE[++j] = '<td>' + data[key]["date_time"].substring(0, 16) + "</td>"; //10
+                    rE[++j] = '<td>' + data[key]["date"].substring(0, 16) + "</td>"; //10
                     rE[++j] = '<td>' + data[key]["text"].replace(/<(?:.|\n)*?>/gm, '') + "</td>";
                     rE[++j] = '<td style="color: red">' + -data[key]["amount"] + "</td>";
                     rE[++j] = '<td>' + "</td>";
@@ -158,6 +162,7 @@ function getTransactions() {
 }
 
 $('#form_new_transaction_income').submit(function (e) {
+        var date = $('#new_date_i').val();
         var text = $('#new_transaction_i_text').val();
         var amount = $('#new_transaction_i_amount').val();
         console.log("adding a transaction");
@@ -182,7 +187,8 @@ $('#form_new_transaction_income').submit(function (e) {
         });
         var sendObject = JSON.stringify({
             text: text,
-            amount: amount
+            amount: amount,
+            date: date
         });
         console.log("Sending", sendObject);
         xhr.send(sendObject);
@@ -190,6 +196,7 @@ $('#form_new_transaction_income').submit(function (e) {
     });
 
 $('#form_new_transaction_expenses').submit(function (e) {
+        var date = $('#new_date_e').val();
         var text = $('#new_transaction_e_text').val();
         var amount = $('#new_transaction_e_amount').val();
         console.log("adding a transaction");
@@ -214,7 +221,8 @@ $('#form_new_transaction_expenses').submit(function (e) {
         });
         var sendObject = JSON.stringify({
             text: text,
-            amount: -amount
+            amount: -amount,
+            date: date
         });
         console.log("Sending", sendObject);
         xhr.send(sendObject);
