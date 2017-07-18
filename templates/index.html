@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="{% static "jquery-ui.min.css" %}">
 
     <link rel="stylesheet" type="text/css" href="{% static "login.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/messages.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/list.css" %}">
     <script src="{% static "bootstrap.min.js" %}"></script>
     <style>
         .scheduler_default_corner div:nth-of-type(4) {
@@ -73,6 +75,12 @@
     <li role="presentation"><a href="#income" aria-controls="income" role="tab"
                                data-toggle="tab">Доходы</a>
     </li>
+    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab"
+                               data-toggle="tab">Сообщения</a>
+    </li>
+    <li role="presentation"><a href="#subscriptions" aria-controls="subscriptions" role="tab"
+                               data-toggle="tab">Подписки</a>
+    </li>
 </ul>
 <div class="tab-content">
 
@@ -84,7 +92,6 @@
             </div>
             <div id="navigator" style="vertical-align: top;position: relative; top: 10%; left: 10%;"></div>
         </div>
-
 
         <div class="row" style="margin-left: 2%; margin-top: 15px;">
             <div class="column padding-reset">
@@ -153,7 +160,144 @@
             </div>
         </div>
     </div>
+    <div role="tabpanel" class="tab-pane" id="messages">
+        <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
+            <div id="div_dialogs">
+
+                <div id="container">
+                    <ul>
+                        <!-- row 01 -->
+                        <a href="#">
+                            <li class="clearfix">
+                                <!-- <img src="images/modern-castle-kitchen.png" alt="thumb" class="thumbnail"> -->
+                                <h2>Full-Room Mansion with Open Kitchen</h2>
+                                <p class="desc">Rental located in Pheonix, AZ. 2 bedrooms 1.5 baths. </p>
+
+                                <span class="price">$2,650/month</span>
+                            </li>
+                        </a>
+
+                        <!-- row 02 -->
+                        <a href="#">
+                            <li class="clearfix">
+                                <!--  <img src="images/penthouse-with-bar.png" alt="Modern penthouse bar" class="thumbnail"> -->
+                                <h2>Modern Penthouse Highrise with Bar</h2>
+                                <p class="desc">Rental located in New York City, NY. 1 bedroom 1 bath.</p>
+
+                                <span class="price">$1,800/month</span>
+                            </li>
+                        </a>
+
+                        <!-- row 03 -->
+                        <a href="#">
+                            <li class="clearfix">
+                                <!--  <img src="images/single-room-loft.png" alt="An adventure room with sofa"
+                                     class="thumbnail"> -->
+                                <h2>Single-Room 3rd Floor Rental</h2>
+                                <p class="desc">Rental located in New York City, NY. 1 bedroom 2 baths.</p>
+
+                                <span class="price">$1,350/month</span>
+                            </li>
+                        </a>
+
+                    </ul>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="panel panel-default widget">
+                            <div class="bubble">Person Namde <br>
+                                Helloooo
+                            </div>
+                            <div class="bubble2">Person Namde <br>
+                                Helloooo
+                            </div>
+                            <div class="panel-heading">
+                                <h3 class="panel-title"> online</h3>
+                                <span class="operson">1299</span></div>
+                            <div class="panel-body">
+                                <ul class="list-group ">
+                                    <li class="list-group-item bubble">
+                                        <div class="row ">
+                                            <div class="col-xs-10 col-md-11 "><span class="time">12:00 AM</span>
+                                                <div class="ro">
+                                                    <h4 class="list-group-item-heading ">person name :</h4>
+                                                    <p class="list-group-item-text">person name stat person name
+                                                        stat</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item   ">
+                                        <div class="row ">
+                                            <div class="col-xs-10 col-md-11 ">
+                                                <div class="bubble2"> hellooo bubble</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-10 col-md-11"><img src="img/img.jpg"> <span class="time">12:00 AM</span>
+                                                <h4 class="list-group-item-heading">person name :</h4>
+                                                <p class="list-group-item-text">person name stat</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-10 col-md-11"><span class="alter"><img
+                                                    src="img/img2.jpg"></span> <span class="timel">12:00 AM</span> <span
+                                                    class="alter">
+                  <h4 class="list-group-item-heading ">: person name</h4>
+                  </span> <span class="altertext"> person name stat</span></div>
+                                        </div>
+                                    </li> -->
+                                </ul>
+                                <a href="#" class="btn btn-primary btn-sm btn-block" role="button"> ОБНОВИТЬ</a></div>
+                            <div class="input-group input-group-addon">
+                                <input type="text" class="form-control" placeholder="Наберите сообщение">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="subscriptions">
+        <div style="margin-left: 2%; margin-right: 2%; margin-top: 10px">
+            <div id="div_subscriptions"></div>
+            <div class="main-content" style="margin-left: 0">
+                <table>
+                    <tr>
+                        <td style="padding-top: 20px; padding-left: 30px;">
+                            <label for="new_transaction_i_text">Алматы</label></td>
+                        <td style="padding-top: 20px; padding-left: 30px;">
+                            <button class="btn btn-primary btn-primary" style="margin-left: 5px; zoom: 0.8"
+                                    id="subscribe1">Подписаться<span class="glyphicon glyphicon-pencil"></span></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 20px; padding-left: 30px;">
+                            <label for="new_transaction_i_text">Астана</label></td>
+                        <td style="padding-top: 20px; padding-left: 30px;">
+                            <button class="btn btn-primary btn-primary" style="margin-left: 5px; zoom: 0.8"
+                                    id="subscribe2">Подписаться<span class="glyphicon glyphicon-pencil"></span></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
+</div>
+
+
 <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="container" style="margin-top: 20px">
         <div class="row">
